@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
+
+import { Link } from 'react-router-dom';
+
 import { Button, Text } from '@chakra-ui/react';
 
 import { Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-ui/react';
@@ -14,13 +17,16 @@ import { useTable, useSortBy } from 'react-table';
 import { useGetUsers } from '../providers/GetUsers';
 
 function TableDisplay() {
-  const { getUsers, users } = useGetUsers();
+  const { getUsers, users, filteredUsers } = useGetUsers();
 
   useEffect(() => {
     getUsers();
   }, []);
 
-  const data = React.useMemo(() => users, [users]);
+  const data = React.useMemo(
+    () => (!!filteredUsers.length ? filteredUsers : users),
+    [filteredUsers, users]
+  );
 
   const columns = React.useMemo(
     () => [
@@ -44,10 +50,6 @@ function TableDisplay() {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data }, useSortBy);
 
-  const handleClick = id => {
-    console.log(rows[id].original);
-  };
-
   return (
     <>
       <Table {...getTableProps()}>
@@ -55,7 +57,7 @@ function TableDisplay() {
           {headerGroups.map((headerGroup, i) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, i) => (
-                <>
+                <Fragment key={i}>
                   {i < 2 && (
                     <Th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
@@ -64,17 +66,17 @@ function TableDisplay() {
                       <chakra.span pl="4">
                         {column.isSorted ? (
                           column.isSortedDesc ? (
-                            <TriangleDownIcon aria-label="sorted descending" />
+                            <TriangleDownIcon />
                           ) : (
-                            <TriangleUpIcon aria-label="sorted ascending" />
+                            <TriangleUpIcon />
                           )
                         ) : (
-                          <UpDownIcon aria-label="sorted ascending" />
+                          <UpDownIcon />
                         )}
                       </chakra.span>
                     </Th>
                   )}
-                </>
+                </Fragment>
               ))}
               <>
                 <Th>Birth</Th>
@@ -89,17 +91,17 @@ function TableDisplay() {
             return (
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell, i) => (
-                  <>
+                  <Fragment key={i}>
                     {i < 3 ? (
                       <Td {...cell.getCellProps()}>{cell.render('Cell')} </Td>
                     ) : (
                       <Td>
-                        <Button onClick={() => handleClick(row.id)} size={'sm'}>
-                          Visualizar
-                        </Button>
+                        <Link to={`/profile/${row.id}`}>
+                          <Button size={'sm'}>Visualizar</Button>
+                        </Link>
                       </Td>
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </Tr>
             );
@@ -112,7 +114,7 @@ function TableDisplay() {
         _hover={{ backgroundColor: 'gray.200' }}
         onClick={getUsers}
       >
-        <SpinnerIcon /> <Text ml="5px">Loading more...</Text>
+        <SpinnerIcon /> <Text ml="5px">Load more</Text>
       </Button>
     </>
   );

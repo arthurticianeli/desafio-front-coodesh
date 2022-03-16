@@ -1,5 +1,4 @@
 import { Flex, Img, Text } from '@chakra-ui/react';
-import React from 'react';
 
 import Logo from '../assets/logo/logo.svg';
 import avatar from '../assets/avatar.png';

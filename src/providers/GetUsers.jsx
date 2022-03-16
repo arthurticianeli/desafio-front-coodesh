@@ -30,15 +30,28 @@ const GetUsersProvider = ({ children }) => {
     });
   };
 
-  // const filterUsers = id => {
-  //   users.filter;
-  // };
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
+  const filterUser = term =>
+    setFilteredUsers(
+      users.filter(
+        user =>
+          user.name.toLowerCase().includes(term.toLowerCase()) ||
+          user.nat.toLowerCase().includes(term.toLowerCase())
+      )
+    );
+
+  const modalUser = id =>
+    !!filteredUsers.length ? filteredUsers[id] : users[id];
 
   return (
     <GetUsers.Provider
       value={{
         users,
         getUsers,
+        filteredUsers,
+        filterUser,
+        modalUser,
       }}
     >
       {children}
