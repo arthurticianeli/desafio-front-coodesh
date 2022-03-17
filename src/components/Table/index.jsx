@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { Button, Text } from '@chakra-ui/react';
+import { Box, Button, Text } from '@chakra-ui/react';
 
 import { Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-ui/react';
 
@@ -14,14 +14,11 @@ import {
 } from '@chakra-ui/icons';
 
 import { useTable, useSortBy } from 'react-table';
-import { useGetUsers } from '../providers/GetUsers';
+import { useGetUsers } from '../../providers/GetUsers';
+import { boxStyle, buttonStyle, textStyle, wrapper } from './styles';
 
 function TableDisplay() {
   const { getUsers, users, filteredUsers } = useGetUsers();
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   const data = React.useMemo(
     () => (!!filteredUsers.length ? filteredUsers : users),
@@ -51,11 +48,11 @@ function TableDisplay() {
     useTable({ columns, data }, useSortBy);
 
   return (
-    <>
+    <Box sx={boxStyle}>
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup, i) => (
-            <Tr {...headerGroup.getHeaderGroupProps()}>
+            <Tr {...headerGroup.getHeaderGroupProps()} sx={wrapper}>
               {headerGroup.headers.map((column, i) => (
                 <Fragment key={i}>
                   {i < 2 && (
@@ -89,7 +86,7 @@ function TableDisplay() {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <Tr {...row.getRowProps()}>
+              <Tr {...row.getRowProps()} sx={wrapper}>
                 {row.cells.map((cell, i) => (
                   <Fragment key={i}>
                     {i < 3 ? (
@@ -108,15 +105,10 @@ function TableDisplay() {
           })}
         </Tbody>
       </Table>
-
-      <Button
-        variant="ghost"
-        _hover={{ backgroundColor: 'gray.200' }}
-        onClick={getUsers}
-      >
-        <SpinnerIcon /> <Text ml="5px">Load more</Text>
+      <Button sx={buttonStyle} variant="ghost" onClick={getUsers}>
+        <SpinnerIcon /> <Text sx={textStyle}>Load more</Text>
       </Button>
-    </>
+    </Box>
   );
 }
 

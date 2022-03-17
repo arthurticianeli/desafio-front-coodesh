@@ -1,6 +1,6 @@
 import { SearchIcon } from '@chakra-ui/icons';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/react';
-import { useGetUsers } from '../providers/GetUsers';
+import { useGetUsers } from '../../providers/GetUsers';
 
 function InputSearch() {
   const { filterUser } = useGetUsers();

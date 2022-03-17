@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Route, Routes, useLocation } from 'react-router-dom';
-import HomePage from '../pages/HomePage';
-import ProfilePage from '../pages/ProfilePage';
+import Home from '../pages/Home';
+import Modal from '../pages/ModalUser';
 
 const Routers = () => {
   const location = useLocation();
@@ -10,11 +10,11 @@ const Routers = () => {
   return (
     <>
       <Routes location={'/'}>
-        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/" element={<Home />} />
       </Routes>
       {location.pathname !== '/' && (
         <Routes>
-          <Route path="/profile/:id" element={<ProfilePage />} />
+          <Route path="/profile/:id" element={<Modal />} />
         </Routes>
       )}
     </>

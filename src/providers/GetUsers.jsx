@@ -11,6 +11,7 @@ const useGetUsers = () => {
 
 const GetUsersProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getUsers = async data => {
     await api.get('?results=50', data).then(response => {
@@ -27,6 +28,7 @@ const GetUsersProvider = ({ children }) => {
       });
 
       setUsers([...users, usersTreated].flat());
+      setLoading(false);
     });
   };
 
@@ -52,6 +54,7 @@ const GetUsersProvider = ({ children }) => {
         filteredUsers,
         filterUser,
         modalUser,
+        loading,
       }}
     >
       {children}
