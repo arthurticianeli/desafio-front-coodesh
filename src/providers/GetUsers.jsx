@@ -13,6 +13,8 @@ const GetUsersProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
   const getUsers = async data => {
     await api.get('?results=50', data).then(response => {
       const usersTreated = response.data.results.map(user => {
@@ -31,8 +33,6 @@ const GetUsersProvider = ({ children }) => {
       setLoading(false);
     });
   };
-
-  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const filterUser = term =>
     setFilteredUsers(
