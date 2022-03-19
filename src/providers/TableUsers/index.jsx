@@ -12,12 +12,12 @@ const useTableUsers = () => {
 const TableUsersProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [listSize, setListSize] = useState(50);
+  const [page, setPage] = useState(1);
   const [maxLoaded, setMaxLoaded] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const getTableUsers = async data => {
-    await api.get(`&results=${listSize}`, data).then(response => {
+    await api.get(`?page=${page}&results=50`, data).then(response => {
       const filterInvalidID = response.data.results.filter(
         user => user.id.value !== null
       );
@@ -31,13 +31,14 @@ const TableUsersProvider = ({ children }) => {
             month: '2-digit',
             day: '2-digit',
           }),
+          page: page,
         };
       });
 
-      setUsers([fixNameAndBirth].flat());
+      setUsers([...users, fixNameAndBirth].flat());
       setLoading(false);
 
-      listSize < 1000 ? setListSize(listSize + 50) : setMaxLoaded(true);
+      page < 100 ? setPage(page + 1) : setMaxLoaded(true);
     });
   };
 

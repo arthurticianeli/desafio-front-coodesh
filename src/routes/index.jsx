@@ -14,7 +14,7 @@ const Routers = () => {
       </Routes>
       {location.pathname !== '/' && (
         <Routes>
-          <Route path="/profile/:id" element={<Modal />} />
+          <Route path="/profile/:page/:id" element={<Modal />} />
         </Routes>
       )}
     </>

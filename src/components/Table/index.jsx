@@ -94,7 +94,9 @@ function TableDisplay() {
                       <Td {...cell.getCellProps()}>{cell.render('Cell')} </Td>
                     ) : (
                       <Td>
-                        <Link to={`/profile/${row.original.id.value}`}>
+                        <Link
+                          to={`/profile/${row.original.page}/${row.original.id.value}`}
+                        >
                           <Button size={'sm'}>Visualizar</Button>
                         </Link>
                       </Td>

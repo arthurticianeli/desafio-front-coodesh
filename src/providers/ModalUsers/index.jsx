@@ -11,11 +11,11 @@ const useModalUsers = () => {
 
 const ModalUsersProvider = ({ children }) => {
   const [modalUsers, setModalUsers] = useState([]);
-  const [listSize, setListSize] = useState(50);
+  const [page, setPage] = useState(1);
   const [maxLoaded, setMaxLoaded] = useState(false);
 
   const getModalUsers = async data => {
-    await api.get(`&results=${listSize}`, data).then(response => {
+    await api.get(`?page=${page}&results=50`, data).then(response => {
       const filterInvalidID = response.data.results.filter(
         user => user.id.value !== null
       );
@@ -29,15 +29,16 @@ const ModalUsersProvider = ({ children }) => {
             month: '2-digit',
             day: '2-digit',
           }),
+          page: page,
         };
       });
 
       const update = () => {
-        setListSize(listSize + 50);
-        setModalUsers([fixNameAndBirth].flat());
+        setPage(page + 1);
+        setModalUsers([...modalUsers, fixNameAndBirth].flat());
       };
 
-      listSize < 1000 ? update() : setMaxLoaded(true);
+      page < 100 ? update() : setMaxLoaded(true);
     });
   };
 
