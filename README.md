@@ -57,7 +57,7 @@ Para lidar com a responsividade da tabela, foi passado um flex-direction=column,
 
 
 ### Estrutura dos arquivos:
-
+´´´
 ├── DESAFIO-FRONT-COODESH
 │   ├── src
 │   │   ├──  assets
