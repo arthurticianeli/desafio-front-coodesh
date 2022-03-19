@@ -4,7 +4,7 @@ Este foi um desafio desenhado pela [**Coodesh**](https://coodesh.com/):
 
 "A empresa Pharma Inc, está trabalhando em um projeto em colaboração com sua base de clientes para facilitar a gestão e visualização da informação dos seus pacientes de maneira simples e objetiva em um Dashboard onde podem listar, filtrar e expandir os dados disponíveis.
 O seu objetivo nesse projeto, é trabalhar no desenvolvimento do Front end que consumirá a API da empresa Pharma Inc seguindo os requisitos propostos neste desafio."
-```
+
 Para construir a solulão foram utilizadas as bibliotecas mais modernas do mercado:
 
 - React
@@ -15,18 +15,18 @@ Para construir a solulão foram utilizadas as bibliotecas mais modernas do merca
 - Axios
 - React Table
 - Cypress
-```
+
 
 [**Acesso à demonstração**](https://desafio-front-coodesh-arthurticianeli.vercel.app/)
-```
+
 
 ![dashboard](https://github.com/arthurticianeli/desafio-front-coodesh/blob/main/src/img/dashboard.png)
-```
+
 ![modal](https://github.com/arthurticianeli/desafio-front-coodesh/blob/main/src/img/modal.png)
-```
+
 
 ## Rodando o projeto
-```
+
 1. Faça o clone do repositório: git clone `git@github.com:arthurticianeli/desafio-front-coodesh.git`;
 
 2. Acesse a pasta do projeto: `cd desafio-front-coodesh`;
@@ -39,7 +39,7 @@ Para construir a solulão foram utilizadas as bibliotecas mais modernas do merca
 
 
 # Project development
-```
+
 Foi disponibilizada a [**API**](https://randomuser.me/) para gerarmos usuários aleatórios. Estudando a documentação da API, cheguei à seguinte solução para gerar um banco de dados de usuários para popular a aplicação:
 
 - Criei no services uma lista fixa por meio do query **Seed**, nomeada de "fixed" => baseURL: https://randomuser.me/api/?seed=fixed
@@ -57,7 +57,7 @@ Para lidar com a responsividade da tabela, foi passado um flex-direction=column,
 
 
 ### Estrutura dos arquivos:
-```
+
 ├── DESAFIO-FRONT-COODESH
 │   ├── src
 │   │   ├──  assets
