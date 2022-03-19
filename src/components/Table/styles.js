@@ -1,17 +1,29 @@
-export const wrapper = {
+export const wrapperHead = {
   th: {
     minWidth: '140px',
   },
+
   '@media (max-width: 750px)': {
     display: 'flex',
     flexDirection: 'column',
 
     borderBottom: '2px solid gray',
-    margin: '10px 0',
 
     th: {
-      padding: '20px 0',
+      paddingY: '20px',
     },
+  },
+};
+
+export const wrapperBody = {
+  transition: 'background 0.5s',
+  _hover: { backgroundColor: 'gray.100' },
+
+  '@media (max-width: 750px)': {
+    display: 'flex',
+    flexDirection: 'column',
+
+    borderBottom: '2px solid gray',
   },
 };
 

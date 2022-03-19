@@ -15,16 +15,19 @@ import {
 
 import { useTable, useSortBy } from 'react-table';
 
-import { boxStyle, buttonStyle, textStyle, wrapper } from './styles';
+import {
+  boxStyle,
+  buttonStyle,
+  textStyle,
+  wrapperBody,
+  wrapperHead,
+} from './styles';
 import { useTableUsers } from '../../providers/TableUsers';
 
 function TableDisplay() {
-  const { getTableUsers, users, filteredUsers, maxLoaded } = useTableUsers();
+  const { getTableUsers, filteredUsers, maxLoaded } = useTableUsers();
 
-  const data = React.useMemo(
-    () => (!!filteredUsers.length ? filteredUsers : users),
-    [filteredUsers, users]
-  );
+  const data = React.useMemo(() => filteredUsers, [filteredUsers]);
 
   const columns = React.useMemo(
     () => [
@@ -53,7 +56,7 @@ function TableDisplay() {
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup, i) => (
-            <Tr {...headerGroup.getHeaderGroupProps()} sx={wrapper}>
+            <Tr {...headerGroup.getHeaderGroupProps()} sx={wrapperHead}>
               {headerGroup.headers.map((column, i) => (
                 <Fragment key={i}>
                   {i < 2 && (
@@ -87,7 +90,7 @@ function TableDisplay() {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <Tr {...row.getRowProps()} sx={wrapper}>
+              <Tr {...row.getRowProps()} sx={wrapperBody}>
                 {row.cells.map((cell, i) => (
                   <Fragment key={i}>
                     {i < 3 ? (
@@ -97,7 +100,7 @@ function TableDisplay() {
                         <Link
                           to={`/profile/${row.original.page}/${row.original.id.value}`}
                         >
-                          <Button size={'sm'}>Visualizar</Button>
+                          <Button size={'sm'}>View</Button>
                         </Link>
                       </Td>
                     )}

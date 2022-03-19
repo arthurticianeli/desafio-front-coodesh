@@ -43,13 +43,15 @@ const TableUsersProvider = ({ children }) => {
   };
 
   const filterUser = term =>
-    setFilteredUsers(
-      users.filter(
-        user =>
-          user.name.toLowerCase().includes(term.toLowerCase()) ||
-          user.nat.toLowerCase().includes(term.toLowerCase())
-      )
-    );
+    term.length
+      ? setFilteredUsers(
+          users.filter(
+            user =>
+              user.name.toLowerCase().includes(term.toLowerCase()) ||
+              user.nat.toLowerCase().includes(term.toLowerCase())
+          )
+        ) || []
+      : setFilteredUsers(users);
 
   return (
     <tableUsersContext.Provider
