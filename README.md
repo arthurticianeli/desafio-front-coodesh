@@ -1,68 +1,94 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Coodesh Front-end Challenge
 
-## Available Scripts
+Este foi um desafio desenhado pela [**Coodesh**](https://coodesh.com/)
 
-In the project directory, you can run:
+Foram utilizadas as bibliotecas mais modernas do mercado:
 
-### `yarn start`
+- React
+- React Hooks
+- Context API
+- React Router Dom
+- Chakra UI
+- Axios
+- React Table
+- Cypress
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+[**Acesso à demonstração**](https://desafio-front-coodesh-arthurticianeli.vercel.app/)
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![modal](https://github.com/arthurticianeli/desafio-front-coodesh/blob/main/src/img/modal.png)
 
-### `yarn build`
+![dashboard](https://github.com/arthurticianeli/desafio-front-coodesh/blob/main/src/img/dashboard.png)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Rodando o projeto
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Faça o clone do repositório: git clone `git@github.com:arthurticianeli/desafio-front-coodesh.git`;
 
-### `yarn eject`
+2. Acesse a pasta do projeto: `cd desafio-front-coodesh`;
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Instale as dependências: `yarn`;
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Rode a aplicação: `yarn start`;
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+6. Rode os testes: `yarn run cypress open`.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+# Project development
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Foi disponibilizada a [**API**](https://randomuser.me/) para gerarmos usuários aleatórios. Estudando a documentação da API, cheguei à seguinte solução para gerar um banco de dados de usuários para popular a aplicação:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Criei no services uma lista fixa por meio do query **Seed**, nomeada de "fixed" => baseURL: https://randomuser.me/api/?seed=fixed
+- Conforme a regra passada, é feita apenas 50 requisições por vez em paginações. => .get(`?page=${page}&results=50`, data)
+- Os dados são tratados no próprio context, momento em que são filtrados os usuários sem ID informado, concatenados os nomes e incluído a página da resposta no objeto => filterInvalidID e fixNameAndBirth
+- Estabeleci o número máximo de 100 páginas para a API. Essa medida foi tomada para que a busca por um usuário não especificado na API não ocasionasse requisições infinitas => page < 100 ? setPage(page + 1) : setMaxLoaded(true);
 
-### Code Splitting
+O componente Table foi feito por meio da junção dos componentes de tabela do Chakra UI (Table, Thead, Th, Tbody, Td) com a biblioteca React-table que gera a tabela a partir de um array de objetos e possui funções como a de sort.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Quanto ao Modal, este é gerado a partir do ID informado pelo hook useParams. Na montagem do componente é feita uma requisição na API, caso o usuário escolhido esteja nessa lista inicial, ele será renderizado, caso não, o useEffect continua realizando requisições na API até que o usuário seja encontrado.
 
-### Analyzing the Bundle Size
+Para que o modal gere uma URL espefíca para cada usuário foi feita uma rota específica => <Route path="/profile/:page/:id" element={<Modal />} />
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Para lidar com a responsividade da tabela, foi passado um flex-direction=column, assim, quando em mobile, os dados serão exibidos em coluna.
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Estrutura dos arquivos:
+```
+├── DESAFIO-FRONT-COODESH
+│   ├── src
+│   │   ├──  assets
+│   │   │     ├── avatar.png
+│   │   │     └── logo.svg
+│   │   ├──  components
+│   │   │     ├── Header
+│   │   │     │     ├── index.jsx
+│   │   │     │     └── styles.js
+│   │   │     ├── InputSearch
+│   │   │     │     └── index.jsx
+│   │   │     ├── Skeleton
+│   │   │     │     └── index.jsx
+│   │   │     └── Table
+│   │   │           ├── index.jsx
+│   │   │           └── styles.js
+│   │   ├──  pages
+│   │   │     ├── Home
+│   │   │     │     ├── index.jsx
+│   │   │     │     └── styles.js
+│   │   │     └── ModalUser
+│   │   │           ├── index.jsx
+│   │   │           └── styles.js
+│   │   ├──  providers
+│   │   │     ├── ModalUsers
+│   │   │     │     ├── index.jsx
+│   │   │     │     └── styles.js
+│   │   │     ├── TableUsers
+│   │   │     │     ├── index.jsx
+│   │   │     │     └── styles.js
+│   │   │     └── index.jsx
+│   │   ├──  routes
+│   │   │     └── index.jsx
+│   │   ├──  services
+│   │   |      └── api.jsx
+│   │   ├── App.js
+│   │   └── index.js
