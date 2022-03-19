@@ -79,10 +79,9 @@ function TableDisplay() {
                   )}
                 </Fragment>
               ))}
-              <>
-                <Th>Birth</Th>
-                <Th>Actions</Th>
-              </>
+
+              <Th>Birth</Th>
+              <Th>Actions</Th>
             </Tr>
           ))}
         </Thead>
