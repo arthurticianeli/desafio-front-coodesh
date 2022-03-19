@@ -16,6 +16,7 @@ Para construir a solulão foram utilizadas as bibliotecas mais modernas do merca
 - React Table
 - Cypress
 
+## Demonstração
 
 [**Acesso à demonstração**](https://desafio-front-coodesh-arthurticianeli.vercel.app/)
 
@@ -57,7 +58,7 @@ Para lidar com a responsividade da tabela, foi passado um flex-direction=column,
 
 
 ### Estrutura dos arquivos:
-´´´
+```
 ├── DESAFIO-FRONT-COODESH
 │   ├── src
 │   │   ├──  assets
