@@ -17,9 +17,8 @@ Foram utilizadas as bibliotecas mais modernas do mercado:
 [**Acesso à demonstração**](https://desafio-front-coodesh-arthurticianeli.vercel.app/)
 
 
-![modal](https://github.com/arthurticianeli/desafio-front-coodesh/blob/main/src/img/modal.png)
-
 ![dashboard](https://github.com/arthurticianeli/desafio-front-coodesh/blob/main/src/img/dashboard.png)
+![modal](https://github.com/arthurticianeli/desafio-front-coodesh/blob/main/src/img/modal.png)
 
 
 ## Rodando o projeto
