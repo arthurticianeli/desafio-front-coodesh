@@ -17,49 +17,64 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Skeleton from '../../components/Skeleton';
-import { useGetUsers } from '../../providers/GetUsers';
+import { useModalUsers } from '../../providers/ModalUsers';
+
 import { subTittleStyle } from './styles';
 
 function ProfilePage() {
-  const [loading, setLoading] = useState(true);
+  const { isOpen, onOpen } = useDisclosure();
+  const { modalUsers, getModalUsers, maxLoaded } = useModalUsers();
+  const navigate = useNavigate();
   const params = useParams();
 
-  const { modalUser } = useGetUsers();
-
-  const user = modalUser(params.id);
-
-  const { isOpen, onOpen } = useDisclosure();
-
-  useEffect(() => {
-    onOpen();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [modalUser, setModalUser] = useState({});
 
   const onClick = () => {
     navigate('/');
   };
 
-  setTimeout(() => {
-    setLoading(false);
-  }, 500);
+  useEffect(() => {
+    getModalUsers();
+    onOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setModalUser(modalUsers.find(user => user.id.value === params.id));
+    !maxLoaded && modalUser
+      ? Object.keys(modalUser).length > 0 && setLoading(false)
+      : getModalUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modalUsers, maxLoaded]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClick}>
       <ModalOverlay />
       <ModalContent>
-        {loading ? (
+        {maxLoaded ? (
+          <>
+            <ModalHeader>
+              <ModalCloseButton />
+              <Text>User not founded</Text>
+            </ModalHeader>
+            <ModalFooter>
+              <Button size={'sm'} onClick={onClick}>
+                Close
+              </Button>
+            </ModalFooter>
+          </>
+        ) : loading ? (
           <Skeleton modal />
         ) : (
           <>
             <ModalHeader>
               <VStack>
-                <Avatar src={user?.picture.medium} size="2xl" />
-                <Text>{user?.name}</Text>
+                <Avatar src={modalUser?.picture.medium} size="2xl" />
+                <Text>{modalUser?.name}</Text>
                 <Text sx={subTittleStyle}>
-                  {user?.id.value
-                    ? `ID: ${user?.id.name} - ${user?.id.value}`
+                  {modalUser?.id.value
+                    ? `ID: ${modalUser?.id.name} - ${modalUser?.id.value}`
                     : 'ID: not informed'}
                 </Text>
               </VStack>
@@ -68,31 +83,32 @@ function ProfilePage() {
             <ModalBody>
               <VStack align="stretch">
                 <Text>
-                  <b>Email:</b> {user?.email}
+                  <b>Email:</b> {modalUser?.email}
                 </Text>
                 <Divider />
                 <Text>
-                  <b>Gender:</b> {user?.gender}
+                  <b>Gender:</b> {modalUser?.gender}
                 </Text>
                 <Divider />
                 <Text>
-                  <b>Birth:</b> {user?.birth}
+                  <b>Birth:</b> {modalUser?.birth}
                 </Text>
                 <Divider />
                 <Text>
                   <b>Phone: </b>
-                  {user?.cell}
+                  {modalUser?.cell}
                 </Text>
                 <Divider />
                 <Text>
-                  <b>Born in:</b> {user?.nat}
+                  <b>Born in:</b> {modalUser?.nat}
                 </Text>
                 <Divider />
                 <Text>
                   <b>Address: </b>
-                  {user?.location.street.name}, {user?.location.street.number},{' '}
-                  {user?.location.city} - {user?.location.state},{' '}
-                  {user?.location.postcode}
+                  {modalUser?.location.street.name},{' '}
+                  {modalUser?.location.street.number},{' '}
+                  {modalUser?.location.city} - {modalUser?.location.state},{' '}
+                  {modalUser?.location.postcode}
                 </Text>
                 <Divider />
                 <Text>

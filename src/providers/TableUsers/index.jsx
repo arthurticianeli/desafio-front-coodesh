@@ -1,23 +1,28 @@
 import { createContext, useContext, useState } from 'react';
-import api from '../services/api';
+import api from '../../services/api';
 
-const GetUsers = createContext({});
+const tableUsersContext = createContext({});
 
-const useGetUsers = () => {
-  const context = useContext(GetUsers);
+const useTableUsers = () => {
+  const context = useContext(tableUsersContext);
 
   return context;
 };
 
-const GetUsersProvider = ({ children }) => {
+const TableUsersProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [listSize, setListSize] = useState(50);
+  const [maxLoaded, setMaxLoaded] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState([]);
 
-  const getUsers = async data => {
-    await api.get('?results=50', data).then(response => {
-      const usersTreated = response.data.results.map(user => {
+  const getTableUsers = async data => {
+    await api.get(`&results=${listSize}`, data).then(response => {
+      const filterInvalidID = response.data.results.filter(
+        user => user.id.value !== null
+      );
+
+      const fixNameAndBirth = filterInvalidID.map(user => {
         return {
           ...user,
           name: `${user.name.first} ${user.name.last}`,
@@ -29,8 +34,10 @@ const GetUsersProvider = ({ children }) => {
         };
       });
 
-      setUsers([...users, usersTreated].flat());
+      setUsers([fixNameAndBirth].flat());
       setLoading(false);
+
+      listSize < 1000 ? setListSize(listSize + 50) : setMaxLoaded(true);
     });
   };
 
@@ -43,23 +50,20 @@ const GetUsersProvider = ({ children }) => {
       )
     );
 
-  const modalUser = id =>
-    !!filteredUsers.length ? filteredUsers[id] : users[id];
-
   return (
-    <GetUsers.Provider
+    <tableUsersContext.Provider
       value={{
         users,
-        getUsers,
+        getTableUsers,
         filteredUsers,
         filterUser,
-        modalUser,
         loading,
+        maxLoaded,
       }}
     >
       {children}
-    </GetUsers.Provider>
+    </tableUsersContext.Provider>
   );
 };
 
-export { GetUsersProvider, useGetUsers };
+export { TableUsersProvider, useTableUsers };

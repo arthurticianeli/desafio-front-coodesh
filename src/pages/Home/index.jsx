@@ -5,14 +5,15 @@ import Header from '../../components/Header';
 import InputSearch from '../../components/InputSearch';
 import Skeleton from '../../components/Skeleton';
 import TableDisplay from '../../components/Table';
-import { useGetUsers } from '../../providers/GetUsers';
+import { useTableUsers } from '../../providers/TableUsers';
+
 import { styleBox, styleStack } from './styles';
 
 function Home() {
-  const { loading, getUsers } = useGetUsers();
+  const { loading, getTableUsers } = useTableUsers();
 
   useEffect(() => {
-    getUsers();
+    getTableUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

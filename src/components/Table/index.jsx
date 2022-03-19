@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { Box, Button, Text } from '@chakra-ui/react';
+import { Box, Button, Center, Text } from '@chakra-ui/react';
 
 import { Table, Thead, Tbody, Tr, Th, Td, chakra } from '@chakra-ui/react';
 
@@ -14,11 +14,12 @@ import {
 } from '@chakra-ui/icons';
 
 import { useTable, useSortBy } from 'react-table';
-import { useGetUsers } from '../../providers/GetUsers';
+
 import { boxStyle, buttonStyle, textStyle, wrapper } from './styles';
+import { useTableUsers } from '../../providers/TableUsers';
 
 function TableDisplay() {
-  const { getUsers, users, filteredUsers } = useGetUsers();
+  const { getTableUsers, users, filteredUsers, maxLoaded } = useTableUsers();
 
   const data = React.useMemo(
     () => (!!filteredUsers.length ? filteredUsers : users),
@@ -83,7 +84,7 @@ function TableDisplay() {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {rows.map(row => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()} sx={wrapper}>
@@ -93,7 +94,7 @@ function TableDisplay() {
                       <Td {...cell.getCellProps()}>{cell.render('Cell')} </Td>
                     ) : (
                       <Td>
-                        <Link to={`/profile/${row.id}`}>
+                        <Link to={`/profile/${row.original.id.value}`}>
                           <Button size={'sm'}>Visualizar</Button>
                         </Link>
                       </Td>
@@ -105,9 +106,17 @@ function TableDisplay() {
           })}
         </Tbody>
       </Table>
-      <Button sx={buttonStyle} variant="ghost" onClick={getUsers}>
-        <SpinnerIcon /> <Text sx={textStyle}>Load more</Text>
-      </Button>
+      <Center>
+        {maxLoaded ? (
+          <Button disabled sx={buttonStyle} variant="ghost">
+            <Text sx={textStyle}>No more user</Text>
+          </Button>
+        ) : (
+          <Button sx={buttonStyle} variant="ghost" onClick={getTableUsers}>
+            <SpinnerIcon /> <Text sx={textStyle}>Load more</Text>
+          </Button>
+        )}
+      </Center>
     </Box>
   );
 }

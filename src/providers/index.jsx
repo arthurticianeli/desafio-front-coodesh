@@ -1,7 +1,12 @@
-import { GetUsersProvider } from './GetUsers';
+import { ModalUsersProvider } from './ModalUsers';
+import { TableUsersProvider } from './TableUsers';
 
 const Providers = ({ children }) => {
-  return <GetUsersProvider>{children}</GetUsersProvider>;
+  return (
+    <TableUsersProvider>
+      <ModalUsersProvider>{children}</ModalUsersProvider>
+    </TableUsersProvider>
+  );
 };
 
 export default Providers;

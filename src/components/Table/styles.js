@@ -1,4 +1,7 @@
 export const wrapper = {
+  th: {
+    minWidth: '140px',
+  },
   '@media (max-width: 750px)': {
     display: 'flex',
     flexDirection: 'column',
@@ -17,8 +20,7 @@ export const textStyle = {
 };
 
 export const buttonStyle = {
-  margin: '20px 0',
-  width: '100%',
+  margin: '20px auto',
 };
 
 export const boxStyle = {
