@@ -56,7 +56,7 @@ Para que o modal gere uma URL espefíca para cada usuário foi feita uma rota es
 
 Para lidar com a responsividade da tabela, foi passado um flex-direction=column, assim, quando em mobile, os dados serão exibidos em coluna.
 
-# Pontos de melhoria
+### Pontos de melhoria
 
 O projeto não utilizou o Docker para facilitar o deploy de DevOps, essa seria a implementação mais importante no futuro.
 
