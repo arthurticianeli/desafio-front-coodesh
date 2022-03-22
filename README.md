@@ -39,7 +39,7 @@ Para construir a solulão foram utilizadas as bibliotecas mais modernas do merca
 6. Rode os testes: `yarn run cypress open`.
 
 
-# Project development
+# Desenvolvimento do projeto
 
 Foi disponibilizada a [**API**](https://randomuser.me/) para gerarmos usuários aleatórios. Estudando a documentação da API, cheguei à seguinte solução para gerar um banco de dados de usuários para popular a aplicação:
 
@@ -56,6 +56,13 @@ Para que o modal gere uma URL espefíca para cada usuário foi feita uma rota es
 
 Para lidar com a responsividade da tabela, foi passado um flex-direction=column, assim, quando em mobile, os dados serão exibidos em coluna.
 
+# Pontos de melhoria
+
+O projeto não utilizou o Docker para facilitar o deploy de DevOps, essa seria a implementação mais importante no futuro.
+
+Alinhar o layout junto com a equipe de design para resolver diferenças com o wireframe proposto inicialmente.
+
+Neste momento, também buscar junto da equipe de design a melhor responsividade da tabela para atender o UX.
 
 ### Estrutura dos arquivos:
 ```
